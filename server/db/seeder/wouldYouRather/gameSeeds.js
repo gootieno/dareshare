@@ -1,6 +1,6 @@
 const games = [
   {
-    name: "Never Have I Ever",
+    name: "Would You Rather",
     description: "A game for discovering hilarious truths",
   },
   // More games...

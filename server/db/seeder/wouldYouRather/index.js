@@ -79,17 +79,15 @@ const seedQuestions = async () => {
 };
 
 // Optional seeding based on command line arguments
-const args = process.argv.slice(2);
+// const args = process.argv.slice(2);
 
-async function runSeeders() {
-  if (args.includes("users")) await seedUsers();
-  if (args.includes("games")) await seedGames();
-  if (args.includes("categories")) await seedCategories();
-  if (args.includes("questions")) await seedQuestions();
+// async function runSeeders() {
+//   if (args.includes("users")) await seedUsers();
+//   if (args.includes("games")) await seedGames();
+//   if (args.includes("categories")) await seedCategories();
+//   if (args.includes("questions")) await seedQuestions();
 
-  console.log("Selected seed operations completed.");
-}
-
-runSeeders().catch(console.error);
+//   console.log("Selected seed operations completed.");
+// }
 
 module.exports = { seedQuestions, seedUsers, seedGames, seedCategories };

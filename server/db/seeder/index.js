@@ -2,14 +2,14 @@ const {
   seedGames,
   seedUsers,
   seedCategories,
-  seedQuestions,
+  seedMildQuestions,
 } = require("./wouldYouRather/index");
 
 const seedDataBase = async () => {
   await seedUsers();
   await seedGames();
   await seedCategories();
-  await seedQuestions();
+  await seedMildQuestions();
 };
 
 seedDataBase().catch((err) => console.error(err));

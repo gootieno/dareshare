@@ -1,21 +1,22 @@
 {
-  "name": "dareshare-client",
-  "version": "0.1.0",
-  "private": true,
+  "name": "client",
+  "version": "1.0.0",
+  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
   },
   "dependencies": {
-    "firebase": "^10.11.0",
-    "next": "14.2.2",
-    "react": "^18",
-    "react-dom": "^18"
+    "@react-native-community/hooks": "^3.0.0",
+    "expo": "~50.0.14",
+    "expo-status-bar": "~1.11.1",
+    "react": "18.2.0",
+    "react-native": "0.73.6"
   },
   "devDependencies": {
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1"
-  }
+    "@babel/core": "^7.20.0"
+  },
+  "private": true
 }

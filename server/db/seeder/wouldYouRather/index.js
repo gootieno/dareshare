@@ -58,7 +58,7 @@ async function seedCategories() {
 }
 
 // question seeder
-const seedQuestions = async () => {
+const seedMildQuestions = async () => {
   const questionsCollection = db.collection("Questions");
 
   for (const question of mildQuestions) {
@@ -85,9 +85,9 @@ const seedQuestions = async () => {
 //   if (args.includes("users")) await seedUsers();
 //   if (args.includes("games")) await seedGames();
 //   if (args.includes("categories")) await seedCategories();
-//   if (args.includes("questions")) await seedQuestions();
+//   if (args.includes("questions")) await seedMildQuestions();
 
 //   console.log("Selected seed operations completed.");
 // }
 
-module.exports = { seedQuestions, seedUsers, seedGames, seedCategories };
+module.exports = { seedMildQuestions, seedUsers, seedGames, seedCategories };

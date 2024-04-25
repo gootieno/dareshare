@@ -1,7 +1,13 @@
-const { db } = require("./firebaseAdminInit");
+require("dotenv").config();
+const admin = require("firebase-admin");
+const path = require("path");
+const serviceAccountPath = path.resolve(process.env.FIREBASE_SERVICE_ACCOUNT);
+const serviceAccount = require(serviceAccountPath);
 
-const addDocument = (collection, data) => {
-  return db.collection(collection).add(data);
-};
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
 
-module.exports = addDocument;
+const db = admin.firestore();
+
+module.exports = { db, admin };

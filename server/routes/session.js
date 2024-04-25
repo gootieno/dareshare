@@ -3,7 +3,7 @@ const router = express.Router();
 const { db } = require("../db");
 
 // Get a specific game session
-app.get("/game-sessions/:sessionId", async (req, res) => {
+router.get("/game-sessions/:sessionId", async (req, res) => {
   try {
     const { sessionId } = req.params;
     const sessionDoc = await db.collection("GameSessions").doc(sessionId).get();

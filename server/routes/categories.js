@@ -3,7 +3,7 @@ const router = express.Router();
 const { db } = require("../db");
 
 // Get all categories for a specific game
-app.get("/games/:gameId/categories", async (req, res) => {
+router.get("/games/:gameId/categories", async (req, res) => {
   try {
     const { gameId } = req.params;
     const categoriesSnapshot = await db

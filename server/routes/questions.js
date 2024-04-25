@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require("../db");
 
 // Get all questions for a specific game
-app.get("/games/:gameId/questions", async (req, res) => {
+router.get("/games/:gameId/questions", async (req, res) => {
   try {
     const { gameId } = req.params;
     const questionsSnapshot = await db

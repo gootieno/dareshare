@@ -3,7 +3,7 @@ const router = express.Router();
 const { db } = require("../db");
 
 // Get all games
-app.get("/games", async (req, res) => {
+router.get("/games", async (req, res) => {
   try {
     const gamesSnapshot = await db.collection("Games").get();
     const games = gamesSnapshot.docs.map((doc) => ({

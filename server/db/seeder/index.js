@@ -1,16 +1,15 @@
 const {
-  seedNewGame,
+  seedGames,
   seedUsers,
   seedCategories,
   seedQuestions,
 } = require("./wouldYouRather/index");
 
-const games = [
-  {
-    name: "Never Have I Ever",
-    description: "A game for discovering hilarious truths",
-  },
-  // More games...
-];
+const seedDataBase = async () => {
+  await seedUsers();
+  await seedGames();
+  await seedCategories();
+  await seedQuestions();
+};
 
-const seedDataBase = async () => {};
+seedDataBase().catch((err) => console.error(err));

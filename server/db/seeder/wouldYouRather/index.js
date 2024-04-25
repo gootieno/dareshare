@@ -2,82 +2,88 @@ const { db } = require("../../index");
 const { mildQuestions } = require("./questionSeeds");
 const { categories } = require("./categorySeeds");
 const { users } = require("./userSeeds");
+const { games } = require("./gameSeeds");
 
 // user seeder
 async function seedUsers() {
   const usersCollection = db.collection("Users");
-  const batch = db.batch();
 
-  users.forEach((user) => {
-    const userRef = usersCollection.doc(); // Auto-generate document ID
-    batch.set(userRef, user);
-  });
-
-  await batch.commit();
-  console.log("Seeded Users collection.");
+  for (const user of users) {
+    const userSnapshot = await usersCollection
+      .where("email", "==", user.email)
+      .get();
+    if (userSnapshot.empty) {
+      const userRef = usersCollection.doc(); // Auto-generate document ID
+      await userRef.set(user);
+      console.log(`Seeded new user: ${user.email}`);
+    } else {
+      console.log(`User already exists: ${user.email}`);
+    }
+  }
 }
 
 // game seeder
-async function seedNewGame(gameData) {
+async function seedGames() {
   const gamesCollection = db.collection("Games");
 
-  // Check if the game already exists
-  const snapshot = await gamesCollection
-    .where("name", "==", gameData.name)
-    .get();
-  if (snapshot.empty) {
-    // If the game does not exist, add it
-    const newGameRef = gamesCollection.doc(); // Auto-generate document ID
-    await newGameRef.set(gameData);
-    console.log(`Seeded new game: ${gameData.name}`);
-  } else {
-    console.log(`Game already exists: ${gameData.name}`);
+  for (const game of games) {
+    const snapshot = await gamesCollection.where("name", "==", game.name).get();
+    if (snapshot.empty) {
+      // If the game does not exist, add it
+      const newGameRef = gamesCollection.doc(); // Auto-generate document ID
+      await newGameRef.set(game);
+      console.log(`Seeded new game: ${game.name}`);
+    } else {
+      console.log(`Game already exists: ${game.name}`);
+    }
   }
 }
 
 // category seeder
 async function seedCategories() {
   const categoriesCollection = db.collection("Categories");
-  const batch = db.batch();
 
-  categories.forEach((category) => {
-    const categoryRef = categoriesCollection.doc(); // Auto-generate document ID
-    batch.set(categoryRef, category);
-  });
-
-  await batch.commit();
-  console.log("Seeded Categories collection.");
+  for (const category of categories) {
+    const categorySnapshot = await categoriesCollection
+      .where("name", "==", category.name)
+      .get();
+    if (categorySnapshot.empty) {
+      const categoryRef = categoriesCollection.doc(); // Auto-generate document ID
+      await categoryRef.set(category);
+      console.log(`Seeded new category: ${category.name}`);
+    } else {
+      console.log(`Category already exists: ${category.name}`);
+    }
+  }
 }
 
 // question seeder
 const seedQuestions = async () => {
   const questionsCollection = db.collection("Questions");
 
-  const batch = db.batch();
-
-  mildQuestions.forEach((questionText) => {
-    const questionRef = questionsCollection.doc(); // Let Firestore auto-generate the ID
-    batch.set(questionRef, {
-      text: questionText,
-      category: "Mild", // Assuming 'Mild' is the category you have in your Categories collection
-    });
-  });
-
-  await batch.commit();
-  console.log("Seeded Would You Rather Questions.");
+  for (const question of mildQuestions) {
+    const questionSnapshot = await questionsCollection
+      .where("text", "==", question.text)
+      .get();
+    if (questionSnapshot.empty) {
+      const questionRef = questionsCollection.doc(); // Auto-generate document ID
+      await questionRef.set({
+        text: question.text,
+        category: "Mild", // Adjust as necessary for your category ID
+      });
+      console.log(`Seeded new question: ${question.text}`);
+    } else {
+      console.log(`Question already exists: ${question.text}`);
+    }
+  }
 };
 
 // Optional seeding based on command line arguments
 const args = process.argv.slice(2);
-const gameData = {
-  name: "Trivia Crack",
-  description:
-    "A trivia game that challenges your knowledge across various topics.",
-};
 
 async function runSeeders() {
   if (args.includes("users")) await seedUsers();
-  if (args.includes("games")) await seedNewGame(gameData);
+  if (args.includes("games")) await seedGames();
   if (args.includes("categories")) await seedCategories();
   if (args.includes("questions")) await seedQuestions();
 
@@ -86,4 +92,4 @@ async function runSeeders() {
 
 runSeeders().catch(console.error);
 
-module.exports = { seedQuestions, seedUsers, seedNewGame, seedCategories };
+module.exports = { seedQuestions, seedUsers, seedGames, seedCategories };

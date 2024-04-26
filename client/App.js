@@ -1,12 +1,26 @@
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View, Text } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import LoadingComponent from "./LoadingComponent"; // Adjust the path as needed
+import WelcomeScreen from "./app/screens/WelcomeScreen"; // Adjust the path as needed
 
 export default function App() {
+  const [isLoading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate an async operation like fetching data or waiting for an auth check
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000); // For example, wait for 2 seconds
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <Text>Hello World!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <LoadingComponent isLoading={isLoading}>
+      <View style={styles.container}>
+        {isLoading ? null : <WelcomeScreen />}
+        <StatusBar style="auto" />
+      </View>
+    </LoadingComponent>
   );
 }
 
